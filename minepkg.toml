@@ -1,0 +1,27 @@
+
+# Preview of the minepkg.toml format! Could break anytime!
+manifestVersion = 0
+
+[package]
+  type = "mod"
+  name = "ping-me"
+  description = "Ping anyone from the chat with notifications!"
+  version = "1.0.0"
+  platform = "fabric"
+  license = "MIT"
+  source = "https://github.com/IntelligentCreations/PingMe"
+  author = "pkstDev"
+
+# These are global requirements
+[requirements]
+  minecraft = "~1.18.2"
+  fabricLoader = ">=0.14.6"
+
+[dependencies]
+  fabric = "*"
+
+[dev]
+  buildCommand = "./gradlew build"
+
+  [dev.dependencies]
+    test-mansion = "*"
