@@ -7,7 +7,7 @@
     "ServerPlayerEntityMixin"
   ],
   "client": [
-    "CommandSuggestorMixin"
+    "ChatInputSuggestorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

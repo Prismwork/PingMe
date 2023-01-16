@@ -13,24 +13,15 @@
   "icon": "assets/pingme/icon.png",
 
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "dev.intelligentcreations.pingme.PingMe"
-    ]
-  },
+  "entrypoints": {},
   "mixins": [
     "pingme.mixins.json"
   ],
-  "custom": {
-    "loom:injected_interfaces": {
-      "net/minecraft/class_3222": ["dev/intelligentcreations/pingme/inject/ServerPlayerEntityHelper"]
-    }
-  },
 
   "depends": {
     "fabricloader": ">=0.14.6",
-    "fabric": "*",
-    "minecraft": "~1.18.2",
+    "fabric-api": "*",
+    "minecraft": "~1.19.3",
     "java": ">=17"
   }
 }

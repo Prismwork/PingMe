@@ -6,7 +6,7 @@ manifestVersion = 0
   type = "mod"
   name = "ping-me"
   description = "Ping anyone from the chat with notifications!"
-  version = "1.0.0"
+  version = "1.0.0+mc1.19.3"
   platform = "fabric"
   license = "MIT"
   source = "https://github.com/IntelligentCreations/PingMe"
@@ -14,7 +14,7 @@ manifestVersion = 0
 
 # These are global requirements
 [requirements]
-  minecraft = "~1.18.2"
+  minecraft = "~1.19.3"
   fabricLoader = ">=0.14.6"
 
 [dependencies]
