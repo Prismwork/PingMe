@@ -1,7 +1,5 @@
 package dev.intelligentcreations.pingme.mixin;
 
-import fr.catcore.server.translations.api.LocalizationTarget;
-import fr.catcore.server.translations.api.ServerTranslations;
 import net.minecraft.network.message.MessageType;
 import net.minecraft.network.message.SentMessage;
 import net.minecraft.server.MinecraftServer;
@@ -16,6 +14,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import xyz.nucleoid.server.translations.api.LocalizationTarget;
+import xyz.nucleoid.server.translations.impl.ServerTranslations;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin {
@@ -56,7 +56,8 @@ public abstract class ServerPlayerEntityMixin {
         Text pingMessage = Text.literal(
                 playerEntity.getName().getString()
                         + ServerTranslations.INSTANCE.getLanguage((LocalizationTarget) playerEntity)
-                                  .remote().get("message.pingme.ping")
+                                  .serverTranslations()
+                                  .get("message.pingme.ping")
         );
 
         if (name.equals("everyone")) {
