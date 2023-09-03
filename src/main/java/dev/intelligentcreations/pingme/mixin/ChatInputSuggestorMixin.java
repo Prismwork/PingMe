@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -25,7 +26,9 @@ import java.util.regex.Pattern;
 
 @Mixin(ChatInputSuggestor.class)
 public abstract class ChatInputSuggestorMixin {
+    @Unique
     private static final Pattern COLON_PATTERN = Pattern.compile("(@)");
+    @Unique
     private static final Pattern WHITESPACE_PATTERN = Pattern.compile("(\\s+)");
 
     @Shadow @Final TextFieldWidget textField;
@@ -45,26 +48,34 @@ public abstract class ChatInputSuggestorMixin {
             cancellable = true
     )
     public void onRefresh(CallbackInfo ci) {
-        if (!this.client.isInSingleplayer()) {
+        // We'd better not judge if the server is single-player or not,
+        // otherwise LAN world servers won't be able to enjoy the mod.
+
+        // if (!this.client.isInSingleplayer()) {
             String message = this.textField.getText();
             StringReader reader = new StringReader(message);
             boolean hasSlash = reader.canRead() && reader.peek() == '/';
             if (hasSlash) reader.skip();
+
             boolean isCommand = this.slashOptional || hasSlash;
             int cursor = this.textField.getCursor();
+
             if (!isCommand) {
                 String textUptoCursor = message.substring(0, cursor);
                 int start = Math.max(getLastPattern(textUptoCursor, COLON_PATTERN) - 1, 0);
                 int whitespace = getLastPattern(textUptoCursor, WHITESPACE_PATTERN);
+
                 if (start < textUptoCursor.length() && start >= whitespace) {
                     if (textUptoCursor.charAt(start) == '@') {
                         List<String> playerNames = new ArrayList<>();
                         ClientPlayNetworkHandler networkHandler = this.client.getNetworkHandler();
+
                         if (networkHandler != null) {
                             playerNames.add("@everyone");
                             networkHandler.getPlayerList().forEach(entry ->
                                     playerNames.add("@" + entry.getProfile().getName())
                             );
+
                             this.pendingSuggestions = CommandSource.suggestMatching(playerNames, new SuggestionsBuilder(textUptoCursor, start));
                             this.pendingSuggestions.thenRun(() -> {
                                 if (this.pendingSuggestions.isDone()) return;
@@ -75,9 +86,10 @@ public abstract class ChatInputSuggestorMixin {
                     }
                 }
             }
-        }
+        // }
     }
 
+    @Unique
     private int getLastPattern(String input, Pattern pattern){
         if (Strings.isNullOrEmpty(input)) {
             return 0;
