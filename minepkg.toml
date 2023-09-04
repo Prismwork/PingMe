@@ -1,4 +1,3 @@
-
 # Preview of the minepkg.toml format! Could break anytime!
 manifestVersion = 0
 
@@ -6,7 +5,7 @@ manifestVersion = 0
   type = "mod"
   name = "ping-me"
   description = "Ping anyone from the chat with notifications!"
-  version = "1.0.0+mc1.19.3"
+  version = "1.1.0+mc1.19.3"
   platform = "fabric"
   license = "MIT"
   source = "https://github.com/IntelligentCreations/PingMe"
@@ -14,8 +13,8 @@ manifestVersion = 0
 
 # These are global requirements
 [requirements]
-  minecraft = "~1.19.3"
-  fabricLoader = ">=0.14.6"
+  minecraft = ["~1.20", "~1.20.1"]
+  fabricLoader = ">=0.14.22"
 
 [dependencies]
   fabric = "*"

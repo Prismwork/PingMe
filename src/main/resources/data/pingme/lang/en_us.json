@@ -1,3 +1,4 @@
 {
-  "message.pingme.ping": " just mentioned you in the chat!"
+  "message.pingme.ping": " just mentioned you in the chat!",
+  "action.pingme.ping_everyone": "Ping everyone in a new chat"
 }

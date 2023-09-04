@@ -1,10 +1,10 @@
 # Ping Me
 
-A server-side Fabric mod that allows you to ping anyone from the chat with notifications!
+A server-side Fabric mod allowing you to ping anybody from the chat with action bar notifications!
 
-Implemented features:
-* Server-side ping functionality, with "@everyone" supported (Vanilla client compatible)
-* Client-side name auto-completion (If the client has also installed the mod)
+You can also install the mod client-side for better experiences.
 
-Planned features:
-* Highlight the ping message
+Features:
+- [X] **(Vanilla Client Compatible)** Server-side ping functionality, with `@everyone` supported
+- [X] **(Modded Client Required)** Client-side player name auto-completion
+- [X] **(Modded Client Required)** Highlighted pings

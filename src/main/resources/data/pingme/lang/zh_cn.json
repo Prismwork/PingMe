@@ -1,3 +1,4 @@
 {
-  "message.pingme.ping": " 刚刚在聊天里提及了你！"
+  "message.pingme.ping": " 刚刚在聊天里提及了你！",
+  "action.pingme.ping_everyone": "在新的聊天里提及所有人"
 }

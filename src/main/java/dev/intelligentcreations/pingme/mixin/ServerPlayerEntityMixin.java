@@ -17,6 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xyz.nucleoid.server.translations.api.LocalizationTarget;
 import xyz.nucleoid.server.translations.impl.ServerTranslations;
 
+import java.util.Objects;
+
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin {
     @Shadow @Final public MinecraftServer server;
@@ -33,21 +35,24 @@ public abstract class ServerPlayerEntityMixin {
         // otherwise LAN world servers won't be able to enjoy the mod.
 
         // if (!this.server.isSingleplayer()) {
-            String processString = message.getContent().getString();
+            String processedString = message.getContent().getString();
 
-            while (processString.contains("@")) {
-                processString = processString.substring(processString.indexOf("@"));
+            while (processedString.contains("@")) {
+                processedString = processedString.substring(processedString.indexOf("@"));
                 ServerPlayerEntity player = this.server.getPlayerManager().getPlayer(params.name().getString());
+
                 if (player != null) {
 					String name;
 
-					if (processString.contains(" ")) name = processString.substring(processString.indexOf("@") + 1, processString.indexOf(" "));
-					else name = processString.substring(processString.indexOf("@") + 1);
+					if (processedString.contains(" ")) name = processedString.substring(processedString.indexOf("@") + 1, processedString.indexOf(" "));
+					else name = processedString.substring(processedString.indexOf("@") + 1);
 
 					doPing(player, name);
 				}
-                processString = processString.substring(1);
+                processedString = processedString.substring(1);
             }
+
+
         // }
     }
 
@@ -62,7 +67,8 @@ public abstract class ServerPlayerEntityMixin {
 
         if (name.equals("everyone")) {
             this.server.getPlayerManager().getPlayerList().forEach(player -> {
-                if (player.getName() != playerEntity.getName()) {
+                if (!Objects.equals(player.getName().getString(), playerEntity.getName().getString())) {
+                    System.out.println(player.getName());
                     player.sendMessage(pingMessage, true);
                     player.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0f, 1.0f);
                 }
